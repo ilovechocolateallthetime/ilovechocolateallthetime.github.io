@@ -1,0 +1,733 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio Francis Lewis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-heading {
+            font-family: 'Barlow Condensed', sans-serif;
+        }
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-white text-stone-900 min-h-screen flex flex-col">
+
+    <!-- Header (Exact Francis Lewis High School Layout) -->
+    <header class="bg-white relative z-20 border-b border-stone-200">
+        <!-- Top Utility Bar -->
+        <div class="max-w-6xl mx-auto px-4 pt-2 pb-1 flex items-center justify-between text-xs text-stone-600">
+            <div class="hidden sm:block w-36"></div>
+            <span id="top-note" class="text-center font-medium text-stone-700">
+                Welcome to Francis Lewis High School &bull; Home of the Patriots
+            </span>
+            <div class="flex items-center gap-1">
+                <button onclick="toggleLanguage()" class="bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-200 px-3 py-1.5 text-[11px] font-bold tracking-wider uppercase flex items-center gap-1.5 transition cursor-pointer">
+                    <span>文A</span>
+                    <span id="lang-label">TRANSLATE (ESPAÑOL)</span>
+                </button>
+                <button onclick="showPage('clubs')" title="View Clubs" class="bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-200 px-2.5 py-1.5 text-xs font-bold transition cursor-pointer">
+                    🔍
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Logo & Title Row (Logo overlaps into the red nav bar like the real site) -->
+        <div class="max-w-6xl mx-auto px-4 flex items-center justify-between relative">
+            <div class="flex items-center gap-4 sm:gap-6">
+                <!-- Overlapping Circular Crest -->
+                <button onclick="showPage('home')" class="relative z-30 -mb-9 mt-1 cursor-pointer flex-shrink-0 focus:outline-none">
+                    <svg viewBox="0 0 130 130" class="w-24 h-24 sm:w-32 sm:h-32 drop-shadow-sm">
+                        <circle cx="65" cy="65" r="61" fill="#ffffff" stroke="#111111" stroke-width="3.5"/>
+                        <circle cx="65" cy="65" r="46" fill="#ffffff" stroke="#111111" stroke-width="1.5"/>
+                        <defs>
+                            <path id="crestTop" d="M 16,65 A 49,49 0 1,1 114,65" />
+                            <path id="crestBot" d="M 15,68 A 50,50 0 0,0 115,68" />
+                        </defs>
+                        <text font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="12" fill="#111111" letter-spacing="1.2">
+                            <textPath id="crest-top-txt" href="#crestTop" startOffset="50%" text-anchor="middle">FRANCIS LEWIS</textPath>
+                        </text>
+                        <text font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="11.5" fill="#111111" letter-spacing="1.2">
+                            <textPath id="crest-bot-txt" href="#crestBot" startOffset="50%" text-anchor="middle">HIGH SCHOOL</textPath>
+                        </text>
+                        <!-- Left & Right Red Stars -->
+                        <text x="12" y="54" font-size="7" fill="#b91c1c">★</text>
+                        <text x="10" y="68" font-size="7" fill="#b91c1c">★</text>
+                        <text x="13" y="82" font-size="7" fill="#b91c1c">★</text>
+                        <text x="111" y="54" font-size="7" fill="#b91c1c">★</text>
+                        <text x="113" y="68" font-size="7" fill="#b91c1c">★</text>
+                        <text x="110" y="82" font-size="7" fill="#b91c1c">★</text>
+                        <!-- Patriot Hat, Face & Red Stripes -->
+                        <path d="M 30,49 Q 60,33 90,49 Q 74,58 60,54 Q 46,58 30,49 Z" fill="#3f3f46"/>
+                        <path d="M 48,54 L 72,54 L 70,67 L 75,72 L 69,75 L 70,83 L 58,88 L 45,79 Z" fill="#111111"/>
+                        <path d="M 53,56 L 69,56 L 67,67 L 71,71 L 66,74 L 67,81 L 57,81 L 53,69 Z" fill="#ffffff"/>
+                        <path d="M 67,78 Q 92,65 112,70 L 110,77 Q 90,72 69,84 Z" fill="#b91c1c"/>
+                        <path d="M 64,86 Q 90,74 109,81 L 106,88 Q 88,81 66,92 Z" fill="#b91c1c"/>
+                    </svg>
+                </button>
+
+                <!-- Two-Weight Condensed Title ("FRANCIS LEWIS" bold + "HIGH SCHOOL" regular) -->
+                <button onclick="showPage('home')" class="text-left py-2 cursor-pointer">
+                    <h1 id="school-name" class="font-heading text-3xl sm:text-5xl md:text-[54px] leading-none tracking-tight text-stone-950 uppercase">
+                        <span class="font-extrabold">FRANCIS LEWIS</span> <span class="font-normal">HIGH SCHOOL</span>
+                    </h1>
+                </button>
+            </div>
+
+            <!-- Signed-Up Badge -->
+            <button onclick="showPage('clubs')" class="hidden md:flex items-center gap-1.5 bg-stone-100 hover:bg-red-50 text-stone-800 border border-stone-200 px-3 py-1.5 text-xs font-bold transition cursor-pointer">
+                <span id="saved-clubs-label">My Clubs:</span>
+                <span id="joined-count" class="bg-[#a61c1c] text-white px-2 py-0.5">0</span>
+            </button>
+        </div>
+
+        <!-- Solid Crimson Navigation Bar with 5 Categories -->
+        <nav class="bg-[#a61c1c] text-white">
+            <div class="max-w-6xl mx-auto px-4 pl-28 sm:pl-40 flex items-center justify-between overflow-x-auto">
+                <button onclick="showPage('home')" data-tab="home" id="nav-home" class="nav-tab px-4 py-3 text-sm font-semibold border-b-4 border-white whitespace-nowrap cursor-pointer">
+                    Home
+                </button>
+                <button onclick="showPage('clubs')" data-tab="clubs" id="nav-clubs" class="nav-tab px-4 py-3 text-sm font-semibold border-b-4 border-transparent hover:bg-black/15 whitespace-nowrap cursor-pointer">
+                    Clubs
+                </button>
+                <button onclick="showPage('sports')" data-tab="sports" id="nav-sports" class="nav-tab px-4 py-3 text-sm font-semibold border-b-4 border-transparent hover:bg-black/15 whitespace-nowrap cursor-pointer">
+                    Sports
+                </button>
+                <button onclick="showPage('so')" data-tab="so" id="nav-so" class="nav-tab px-4 py-3 text-sm font-semibold border-b-4 border-transparent hover:bg-black/15 whitespace-nowrap cursor-pointer">
+                    Student Organization (SO)
+                </button>
+                <button onclick="showPage('schedule')" data-tab="schedule" id="nav-schedule" class="nav-tab px-4 py-3 text-sm font-semibold border-b-4 border-transparent hover:bg-black/15 whitespace-nowrap cursor-pointer">
+                    Meeting Days
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow w-full">
+
+        <!-- ===============================================================
+             1. HOME PAGE (Full-Width Hero + Right Red Tabs + 8 Clubs)
+        =============================================================== -->
+        <section id="page-home" class="page-section active">
+            <!-- Full-Width Hero Banner Matching Screenshot -->
+            <div class="relative w-full h-[340px] sm:h-[430px] bg-stone-900 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1600&q=80"
+                     onerror="this.src='https://placehold.co/1600x500/292524/ffffff?text=Francis+Lewis+High+School+Students'"
+                     alt="Students working on a club project"
+                     class="w-full h-full object-cover object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"></div>
+
+                <!-- Bottom-Left Caption -->
+                <div class="absolute bottom-5 left-5 sm:left-10 max-w-lg text-white">
+                    <h2 id="banner-title" class="font-heading text-3xl sm:text-4xl font-bold uppercase drop-shadow">
+                        Student Clubs &amp; Activities
+                    </h2>
+                    <p id="banner-desc" class="text-xs sm:text-sm text-stone-100 mt-1 drop-shadow">
+                        Explore our 8 clubs and sports teams, or click the red tabs on the right to jump to a section.
+                    </p>
+                </div>
+
+                <!-- Right-Side Stacked Crimson Quick-Link Tabs (Like Screenshot) -->
+                <div class="hidden sm:flex flex-col gap-2.5 absolute right-0 top-1/2 -translate-y-1/2 z-10">
+                    <button onclick="showPage('clubs')" id="side-tab-1" class="bg-[#a61c1c]/95 hover:bg-[#881414] text-white text-center font-semibold text-sm px-6 py-4 w-44 shadow-md transition cursor-pointer">
+                        School Clubs
+                    </button>
+                    <button onclick="showPage('so')" id="side-tab-2" class="bg-[#a61c1c]/95 hover:bg-[#881414] text-white text-center font-semibold text-sm px-6 py-4 w-44 shadow-md transition leading-tight cursor-pointer">
+                        Student<br>Organization
+                    </button>
+                    <button onclick="showPage('sports')" id="side-tab-3" class="bg-[#a61c1c]/95 hover:bg-[#881414] text-white text-center font-semibold text-sm px-6 py-4 w-44 shadow-md transition cursor-pointer">
+                        Athletics
+                    </button>
+                    <button onclick="showPage('schedule')" id="side-tab-4" class="bg-[#a61c1c]/95 hover:bg-[#881414] text-white text-center font-semibold text-sm px-6 py-4 w-44 shadow-md transition cursor-pointer">
+                        Meeting Days
+                    </button>
+                </div>
+            </div>
+
+            <!-- All 8 Clubs Section -->
+            <div class="max-w-6xl mx-auto px-4 py-10">
+                <div class="border-b-2 border-[#a61c1c] pb-2 mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                    <div>
+                        <h3 id="all-clubs-heading" class="font-heading text-3xl font-bold text-stone-900 uppercase">
+                            Clubs &amp; Sports (8)
+                        </h3>
+                        <p id="all-clubs-sub" class="text-sm text-stone-600">
+                            Choir, Gardening, Key Club, Art for Awareness, Chess, Volleyball, Soccer, and Basketball.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="home-clubs-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+            </div>
+        </section>
+
+        <!-- ===============================================================
+             2. CLUBS PAGE (Choir, Gardening, Key, Art for Awareness, Chess)
+        =============================================================== -->
+        <section id="page-clubs" class="page-section max-w-6xl mx-auto px-4 py-8 space-y-6">
+            <div class="border-b-2 border-[#a61c1c] pb-3">
+                <h2 id="clubs-tab-title" class="font-heading text-3xl font-bold uppercase text-stone-900">School Clubs</h2>
+                <p id="clubs-tab-desc" class="text-sm text-stone-600 mt-1">
+                    Choir, Gardening, Key Club, Art for Awareness, and Chess.
+                </p>
+            </div>
+            <div id="clubs-only-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </section>
+
+        <!-- ===============================================================
+             3. SPORTS PAGE (Volleyball, Soccer, Basketball)
+        =============================================================== -->
+        <section id="page-sports" class="page-section max-w-6xl mx-auto px-4 py-8 space-y-6">
+            <div class="border-b-2 border-[#a61c1c] pb-3">
+                <h2 id="sports-tab-title" class="font-heading text-3xl font-bold uppercase text-stone-900">Athletics &amp; Sports</h2>
+                <p id="sports-tab-desc" class="text-sm text-stone-600 mt-1">
+                    Volleyball, Soccer, and Basketball teams at our school.
+                </p>
+            </div>
+            <div id="sports-only-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </section>
+
+        <!-- ===============================================================
+             4. STUDENT ORGANIZATION (SO) PAGE
+        =============================================================== -->
+        <section id="page-so" class="page-section max-w-6xl mx-auto px-4 py-8 space-y-6">
+            <div class="bg-stone-50 p-6 sm:p-8 border border-stone-200 space-y-4">
+                <span class="inline-block bg-[#a61c1c] text-white text-xs font-bold uppercase px-2.5 py-1">SO</span>
+                <h2 id="so-title" class="font-heading text-3xl font-bold uppercase text-stone-900">
+                    Student Organization (SO)
+                </h2>
+                <p id="so-p1" class="text-stone-700 text-sm sm:text-base leading-relaxed">
+                    The Student Organization (SO) represents all students at Francis Lewis High School. We organize school events, spirit weeks, fundraisers, and help connect students with clubs like Key Club, Choir, and our sports teams.
+                </p>
+                <div class="bg-white border border-stone-200 p-4">
+                    <h3 id="so-box-title" class="font-bold text-stone-900 text-sm mb-2">What does SO do?</h3>
+                    <ul id="so-list" class="list-disc list-inside text-sm text-stone-700 space-y-1.5">
+                        <li>Plans school dances, spirit days, and Pep Rallies.</li>
+                        <li>Supports all 8 school clubs and sports teams.</li>
+                        <li>Listens to student ideas to make our school better.</li>
+                    </ul>
+                </div>
+                <button onclick="toggleJoin('so')" id="so-join-btn" class="bg-[#a61c1c] hover:bg-[#881414] text-white font-semibold px-5 py-2.5 text-sm transition cursor-pointer">
+                    Join Student Organization (SO)
+                </button>
+            </div>
+        </section>
+
+        <!-- ===============================================================
+             5. MEETING DAYS PAGE (Simple Table)
+        =============================================================== -->
+        <section id="page-schedule" class="page-section max-w-6xl mx-auto px-4 py-8 space-y-6">
+            <div class="border-b-2 border-[#a61c1c] pb-3">
+                <h2 id="sched-title" class="font-heading text-3xl font-bold uppercase text-stone-900">Weekly Club Schedule</h2>
+                <p id="sched-desc" class="text-sm text-stone-600 mt-1">All clubs meet after 8th period at 3:15 PM.</p>
+            </div>
+
+            <div class="overflow-x-auto border border-stone-200">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead class="bg-stone-100">
+                        <tr class="border-b border-stone-200 text-stone-800">
+                            <th id="th-club" class="py-3 px-4">Club / Team</th>
+                            <th id="th-day" class="py-3 px-4">Day</th>
+                            <th id="th-room" class="py-3 px-4">Room / Location</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-tbody" class="divide-y divide-stone-200 bg-white"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-100 border-t border-stone-200 py-5 px-4 mt-10 text-center text-xs text-stone-600">
+        <p id="footer-text">Francis Lewis High School &bull; Student Activities Website</p>
+    </footer>
+
+    <!-- Club Detail Modal -->
+    <div id="club-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white max-w-md w-full p-6 shadow-xl border border-stone-200 space-y-4">
+            <div class="flex items-start justify-between">
+                <div>
+                    <span id="modal-category" class="text-xs font-bold uppercase text-[#a61c1c]"></span>
+                    <h3 id="modal-name" class="font-heading text-2xl font-bold text-stone-900 uppercase"></h3>
+                </div>
+                <button onclick="closeModal()" class="text-stone-400 hover:text-stone-700 text-2xl leading-none cursor-pointer">&times;</button>
+            </div>
+            <div id="modal-drawing" class="w-28 h-28 mx-auto"></div>
+            <p id="modal-caption" class="text-sm text-stone-700 leading-relaxed bg-stone-50 p-3.5 border border-stone-200"></p>
+            <div class="text-xs text-stone-700 flex justify-between bg-stone-100 px-3.5 py-2.5 font-medium">
+                <span id="modal-day"></span>
+                <span id="modal-room"></span>
+            </div>
+            <div class="flex gap-2 pt-1">
+                <button id="modal-action-btn" class="flex-1 bg-[#a61c1c] hover:bg-[#881414] text-white font-semibold py-2.5 text-sm transition cursor-pointer"></button>
+                <button id="modal-close-txt" onclick="closeModal()" class="px-4 py-2.5 bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold text-sm transition cursor-pointer">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Notification Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-stone-900 text-white text-xs font-semibold px-4 py-3 shadow-lg opacity-0 pointer-events-none transition-opacity duration-200 z-50"></div>
+
+    <script>
+        let lang = 'en'; // Starts in English; click TRANSLATE in top-right to switch to Spanish
+        const joinedSet = new Set();
+
+        // Complete list of 8 requested clubs & sports with drawings and captions
+        const clubsData = [
+            {
+                id: 'choir',
+                category: 'clubs',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#fef2f2"/><path d="M35 65 V28 L72 22 V59" stroke="#a61c1c" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="28" cy="67" r="9" fill="#a61c1c"/><circle cx="65" cy="61" r="9" fill="#a61c1c"/><path d="M18 32 Q23 26 28 32" stroke="#d97706" stroke-width="3" fill="none"/></svg>`,
+                en: {
+                    name: 'Choir',
+                    tag: 'Club',
+                    day: 'Mondays',
+                    room: 'Room 114 (Music)',
+                    caption: 'Are you interested in singing and performing at school concerts? Join our Choir and sing with friends!'
+                },
+                es: {
+                    name: 'Coro (Choir)',
+                    tag: 'Club',
+                    day: 'Lunes',
+                    room: 'Salón 114 (Música)',
+                    caption: '¿Te interesa cantar en conciertos escolares? ¡Únete a nuestro coro y comparte tu voz con amigos!'
+                }
+            },
+            {
+                id: 'gardening',
+                category: 'clubs',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#f0fdf4"/><path d="M30 62 H70 L64 84 H36 Z" fill="#b45309"/><path d="M50 62 V38" stroke="#15803d" stroke-width="4" stroke-linecap="round"/><path d="M50 48 C34 48 32 34 46 36 C48 40 50 44 50 48 Z" fill="#22c55e"/><path d="M50 42 C66 42 68 28 54 30 C52 34 50 38 50 42 Z" fill="#16a34a"/></svg>`,
+                en: {
+                    name: 'Gardening Club',
+                    tag: 'Club',
+                    day: 'Tuesdays',
+                    room: 'Courtyard Garden',
+                    caption: 'Do you like nature and planting flowers? Help us grow vegetables and plants in our school courtyard!'
+                },
+                es: {
+                    name: 'Jardinería (Gardening)',
+                    tag: 'Club',
+                    day: 'Martes',
+                    room: 'Jardín del Patio',
+                    caption: '¿Te gusta la naturaleza y cuidar las plantas? ¡Ven a cultivar flores y vegetales en el jardín del colegio!'
+                }
+            },
+            {
+                id: 'key',
+                category: 'clubs',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#eff6ff"/><circle cx="36" cy="50" r="14" stroke="#1d4ed8" stroke-width="5" fill="#dbeafe"/><path d="M50 50 H80 M68 50 V62 M77 50 V60" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round"/></svg>`,
+                en: {
+                    name: 'Key Club',
+                    tag: 'Club',
+                    day: 'Wednesdays',
+                    room: 'Room 204',
+                    caption: 'Do you want to volunteer and help our community? Join Key Club to earn service hours and lead school drives!'
+                },
+                es: {
+                    name: 'Key Club',
+                    tag: 'Club',
+                    day: 'Miércoles',
+                    room: 'Salón 204',
+                    caption: '¿Quieres ayudar a nuestra comunidad y hacer voluntariado? ¡Únete a Key Club para participar en proyectos solidarios!'
+                }
+            },
+            {
+                id: 'art',
+                category: 'clubs',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#fdf4ff"/><path d="M50 22 C30 22 18 36 18 52 C18 68 32 78 46 78 C52 78 55 73 53 68 C51 63 56 59 62 61 C74 64 82 55 82 44 C82 31 68 22 50 22 Z" fill="#f5d0fe" stroke="#a21caf" stroke-width="3"/><circle cx="34" cy="42" r="4.5" fill="#dc2626"/><circle cx="48" cy="34" r="4.5" fill="#eab308"/><circle cx="64" cy="39" r="4.5" fill="#2563eb"/><circle cx="33" cy="58" r="4.5" fill="#16a34a"/></svg>`,
+                en: {
+                    name: 'Art for Awareness',
+                    tag: 'Club',
+                    day: 'Thursdays',
+                    room: 'Room 308 (Art)',
+                    caption: 'Do you love painting and drawing posters? Use your creativity to spread positive messages around school!'
+                },
+                es: {
+                    name: 'Arte para la Conciencia',
+                    tag: 'Club',
+                    day: 'Jueves',
+                    room: 'Salón 308 (Arte)',
+                    caption: '¿Te encanta dibujar y pintar carteles creativos? ¡Usa el arte para compartir mensajes positivos en la escuela!'
+                }
+            },
+            {
+                id: 'chess',
+                category: 'clubs',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#f5f5f4"/><path d="M32 78 H68 L64 70 H36 Z M40 70 L44 46 H56 L60 70 Z M38 46 H62 V40 H38 Z M50 22 V34 M44 28 H56" stroke="#1c1917" stroke-width="4" fill="#d6d3d1" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+                en: {
+                    name: 'Chess Club',
+                    tag: 'Club',
+                    day: 'Fridays',
+                    room: 'Library',
+                    caption: 'Are you interested in strategy games? Play friendly matches and learn new chess moves every week!'
+                },
+                es: {
+                    name: 'Club de Ajedrez (Chess)',
+                    tag: 'Club',
+                    day: 'Viernes',
+                    room: 'Biblioteca',
+                    caption: '¿Te interesa jugar partidas de estrategia? ¡Ven a practicar ajedrez y aprender nuevas jugadas cada semana!'
+                }
+            },
+            {
+                id: 'volleyball',
+                category: 'sports',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#fffbeb"/><circle cx="50" cy="50" r="28" fill="#fef3c7" stroke="#d97706" stroke-width="3.5"/><path d="M26 38 Q50 52 74 38 M34 72 Q50 50 50 22 M66 72 Q50 50 50 22" stroke="#d97706" stroke-width="2.5" fill="none"/></svg>`,
+                en: {
+                    name: 'Volleyball',
+                    tag: 'Sport',
+                    day: 'Mondays & Wednesdays',
+                    room: 'Main Gym',
+                    caption: 'Do you love teamwork on the court? Practice your serves, spikes, and passes with our Volleyball team!'
+                },
+                es: {
+                    name: 'Voleibol (Volleyball)',
+                    tag: 'Deporte',
+                    day: 'Lunes y Miércoles',
+                    room: 'Gimnasio Principal',
+                    caption: '¿Te encanta trabajar en equipo en la cancha? ¡Practica tus saques y remates con nuestro equipo de voleibol!'
+                }
+            },
+            {
+                id: 'soccer',
+                category: 'sports',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#ecfdf5"/><circle cx="50" cy="50" r="28" fill="#ffffff" stroke="#1c1917" stroke-width="3.5"/><polygon points="50,37 61,45 57,58 43,58 39,45" fill="#1c1917"/><path d="M50 37 V23 M61 45 L74 40 M57 58 L65 71 M43 58 L35 71 M39 45 L26 40" stroke="#1c1917" stroke-width="2.5"/></svg>`,
+                en: {
+                    name: 'Soccer',
+                    tag: 'Sport',
+                    day: 'Tuesdays & Thursdays',
+                    room: 'Athletic Field',
+                    caption: 'Do you want to play soccer after school? Join our Patriots Soccer squad for drills and friendly games!'
+                },
+                es: {
+                    name: 'Fútbol (Soccer)',
+                    tag: 'Deporte',
+                    day: 'Martes y Jueves',
+                    room: 'Campo Deportivo',
+                    caption: '¿Quieres jugar al fútbol después de clases? ¡Únete al equipo de fútbol de los Patriots para entrenar y competir!'
+                }
+            },
+            {
+                id: 'basketball',
+                category: 'sports',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="12" fill="#fff7ed"/><circle cx="50" cy="50" r="28" fill="#ea580c" stroke="#7c2d12" stroke-width="3"/><path d="M22 50 H78 M50 22 V78 M31 30 Q50 50 31 70 M69 30 Q50 50 69 70" stroke="#7c2d12" stroke-width="2.5" fill="none"/></svg>`,
+                en: {
+                    name: 'Basketball',
+                    tag: 'Sport',
+                    day: 'Wednesdays & Fridays',
+                    room: 'Main Gym',
+                    caption: 'Do you like shooting hoops and fast-paced games? Come practice with the Francis Lewis Basketball team!'
+                },
+                es: {
+                    name: 'Baloncesto (Basketball)',
+                    tag: 'Deporte',
+                    day: 'Miércoles y Viernes',
+                    room: 'Gimnasio Principal',
+                    caption: '¿Te gusta encestar y jugar partidos emocionantes? ¡Ven a entrenar con el equipo de baloncesto del colegio!'
+                }
+            }
+        ];
+
+        const textPack = {
+            en: {
+                topNote: 'Welcome to Francis Lewis High School • Home of the Patriots',
+                langBtn: 'TRANSLATE (ESPAÑOL)',
+                crestTop: 'FRANCIS LEWIS',
+                crestBot: 'HIGH SCHOOL',
+                schoolTitleHtml: '<span class="font-extrabold">FRANCIS LEWIS</span> <span class="font-normal">HIGH SCHOOL</span>',
+                pageTitle: 'Francis Lewis High School',
+                savedLabel: 'My Clubs:',
+                navHome: 'Home',
+                navClubs: 'Clubs',
+                navSports: 'Sports',
+                navSo: 'Student Organization (SO)',
+                navSchedule: 'Meeting Days',
+                sideTab1: 'School Clubs',
+                sideTab2: 'Student<br>Organization',
+                sideTab3: 'Athletics',
+                sideTab4: 'Meeting Days',
+                bannerTitle: 'Student Clubs & Activities',
+                bannerDesc: 'Explore our 8 clubs and sports teams, or click the red tabs on the right to jump to a section.',
+                allHeading: 'Clubs & Sports (8)',
+                allSub: 'Choir, Gardening, Key Club, Art for Awareness, Chess, Volleyball, Soccer, and Basketball.',
+                clubsTabTitle: 'School Clubs',
+                clubsTabDesc: 'Choir, Gardening, Key Club, Art for Awareness, and Chess.',
+                sportsTabTitle: 'Athletics & Sports',
+                sportsTabDesc: 'Volleyball, Soccer, and Basketball teams at our school.',
+                soTitle: 'Student Organization (SO)',
+                soP1: 'The Student Organization (SO) represents all students at Francis Lewis High School. We organize school events, spirit weeks, fundraisers, and help connect students with clubs like Key Club, Choir, and our sports teams.',
+                soBoxTitle: 'What does SO do?',
+                soList: `
+                    <li>Plans school dances, spirit days, and Pep Rallies.</li>
+                    <li>Supports all 8 school clubs and sports teams.</li>
+                    <li>Listens to student ideas to make our school better.</li>
+                `,
+                soJoin: 'Join Student Organization (SO)',
+                soJoined: '✓ Signed Up for SO',
+                schedTitle: 'Weekly Club Schedule',
+                schedDesc: 'All clubs meet after 8th period at 3:15 PM.',
+                thClub: 'Club / Team',
+                thDay: 'Day',
+                thRoom: 'Room / Location',
+                footer: 'Francis Lewis High School • Student Activities Website',
+                joinBtn: 'Sign Up',
+                joinedBtn: '✓ Signed Up',
+                infoBtn: 'Info',
+                closeBtn: 'Close',
+                toastIn: (n) => `Signed up for ${n}!`,
+                toastOut: (n) => `Removed ${n} from your list.`
+            },
+            es: {
+                topNote: 'Bienvenidos al Colegio Francis Lewis • Hogar de los Patriots',
+                langBtn: 'TRANSLATE (ENGLISH)',
+                crestTop: 'COLEGIO FRANCIS LEWIS',
+                crestBot: 'HIGH SCHOOL',
+                schoolTitleHtml: '<span class="font-extrabold">COLEGIO</span> <span class="font-normal">FRANCIS LEWIS</span>',
+                pageTitle: 'Colegio Francis Lewis',
+                savedLabel: 'Mis Clubes:',
+                navHome: 'Inicio',
+                navClubs: 'Clubes',
+                navSports: 'Deportes',
+                navSo: 'Organización Estudiantil (SO)',
+                navSchedule: 'Horarios',
+                sideTab1: 'Clubes Escolares',
+                sideTab2: 'Organización<br>Estudiantil',
+                sideTab3: 'Deportes',
+                sideTab4: 'Horarios',
+                bannerTitle: 'Clubes y Actividades Estudiantiles',
+                bannerDesc: 'Explora nuestros 8 clubes y equipos deportivos, o haz clic en las pestañas rojas de la derecha.',
+                allHeading: 'Clubes y Deportes (8)',
+                allSub: 'Coro, Jardinería, Key Club, Arte para la Conciencia, Ajedrez, Voleibol, Fútbol y Baloncesto.',
+                clubsTabTitle: 'Clubes Escolares',
+                clubsTabDesc: 'Coro, Jardinería, Key Club, Arte para la Conciencia y Ajedrez.',
+                sportsTabTitle: 'Deportes Escolares',
+                sportsTabDesc: 'Equipos de Voleibol, Fútbol y Baloncesto de nuestro colegio.',
+                soTitle: 'Organización Estudiantil (SO)',
+                soP1: 'La Organización Estudiantil (SO) representa a todos los estudiantes del Colegio Francis Lewis. Organizamos eventos escolares, días de espíritu escolar y apoyamos a nuestros clubes y equipos deportivos.',
+                soBoxTitle: '¿Qué hace la SO?',
+                soList: `
+                    <li>Organiza eventos escolares, bailes y actividades para los estudiantes.</li>
+                    <li>Apoya a los 8 clubes y equipos deportivos del colegio.</li>
+                    <li>Escucha las ideas de los estudiantes para mejorar nuestra escuela.</li>
+                `,
+                soJoin: 'Unirme a la Organización Estudiantil (SO)',
+                soJoined: '✓ Inscrito en SO',
+                schedTitle: 'Horario Semanal de Clubes',
+                schedDesc: 'Todos los clubes se reúnen después de clases a las 3:15 p.m.',
+                thClub: 'Club / Equipo',
+                thDay: 'Día',
+                thRoom: 'Salón / Lugar',
+                footer: 'Colegio Francis Lewis • Sitio Web de Actividades Estudiantiles',
+                joinBtn: '¡Unirme!',
+                joinedBtn: '✓ Inscrito',
+                infoBtn: 'Info',
+                closeBtn: 'Cerrar',
+                toastIn: (n) => `¡Te inscribiste en ${n}!`,
+                toastOut: (n) => `Saliste de ${n}.`
+            }
+        };
+
+        window.onload = function () {
+            renderAll();
+        };
+
+        function toggleLanguage() {
+            lang = lang === 'en' ? 'es' : 'en';
+            document.documentElement.lang = lang;
+            renderAll();
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                if (btn.dataset.tab === pageId) {
+                    btn.classList.add('border-white');
+                    btn.classList.remove('border-transparent');
+                } else {
+                    btn.classList.remove('border-white');
+                    btn.classList.add('border-transparent');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderAll() {
+            const t = textPack[lang];
+            document.title = t.pageTitle;
+            document.getElementById('top-note').textContent = t.topNote;
+            document.getElementById('lang-label').textContent = t.langBtn;
+            document.getElementById('crest-top-txt').textContent = t.crestTop;
+            document.getElementById('crest-bot-txt').textContent = t.crestBot;
+            document.getElementById('school-name').innerHTML = t.schoolTitleHtml;
+            document.getElementById('saved-clubs-label').textContent = t.savedLabel;
+
+            document.getElementById('nav-home').textContent = t.navHome;
+            document.getElementById('nav-clubs').textContent = t.navClubs;
+            document.getElementById('nav-sports').textContent = t.navSports;
+            document.getElementById('nav-so').textContent = t.navSo;
+            document.getElementById('nav-schedule').textContent = t.navSchedule;
+
+            document.getElementById('side-tab-1').innerHTML = t.sideTab1;
+            document.getElementById('side-tab-2').innerHTML = t.sideTab2;
+            document.getElementById('side-tab-3').innerHTML = t.sideTab3;
+            document.getElementById('side-tab-4').innerHTML = t.sideTab4;
+
+            document.getElementById('banner-title').textContent = t.bannerTitle;
+            document.getElementById('banner-desc').textContent = t.bannerDesc;
+            document.getElementById('all-clubs-heading').textContent = t.allHeading;
+            document.getElementById('all-clubs-sub').textContent = t.allSub;
+
+            document.getElementById('clubs-tab-title').textContent = t.clubsTabTitle;
+            document.getElementById('clubs-tab-desc').textContent = t.clubsTabDesc;
+            document.getElementById('sports-tab-title').textContent = t.sportsTabTitle;
+            document.getElementById('sports-tab-desc').textContent = t.sportsTabDesc;
+
+            document.getElementById('so-title').textContent = t.soTitle;
+            document.getElementById('so-p1').textContent = t.soP1;
+            document.getElementById('so-box-title').textContent = t.soBoxTitle;
+            document.getElementById('so-list').innerHTML = t.soList;
+
+            const soBtn = document.getElementById('so-join-btn');
+            const isSoJoined = joinedSet.has('so');
+            soBtn.textContent = isSoJoined ? t.soJoined : t.soJoin;
+            soBtn.className = isSoJoined
+                ? 'bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-5 py-2.5 text-sm transition cursor-pointer'
+                : 'bg-[#a61c1c] hover:bg-[#881414] text-white font-semibold px-5 py-2.5 text-sm transition cursor-pointer';
+
+            document.getElementById('sched-title').textContent = t.schedTitle;
+            document.getElementById('sched-desc').textContent = t.schedDesc;
+            document.getElementById('th-club').textContent = t.thClub;
+            document.getElementById('th-day').textContent = t.thDay;
+            document.getElementById('th-room').textContent = t.thRoom;
+            document.getElementById('footer-text').textContent = t.footer;
+            document.getElementById('modal-close-txt').textContent = t.closeBtn;
+
+            // Populate Grids
+            document.getElementById('home-clubs-grid').innerHTML = clubsData.map(buildCard).join('');
+            document.getElementById('clubs-only-grid').innerHTML = clubsData.filter(c => c.category === 'clubs').map(buildCard).join('');
+            document.getElementById('sports-only-grid').innerHTML = clubsData.filter(c => c.category === 'sports').map(buildCard).join('');
+
+            // Populate Schedule Table
+            document.getElementById('schedule-tbody').innerHTML = clubsData.map(c => `
+                <tr class="hover:bg-stone-50">
+                    <td class="py-3 px-4 font-semibold text-stone-900">${c[lang].name}</td>
+                    <td class="py-3 px-4 text-stone-700">${c[lang].day}</td>
+                    <td class="py-3 px-4 text-stone-600">${c[lang].room}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('joined-count').textContent = joinedSet.size;
+        }
+
+        function buildCard(club) {
+            const info = club[lang];
+            const t = textPack[lang];
+            const isJoined = joinedSet.has(club.id);
+
+            return `
+                <div class="bg-white border border-stone-200 p-5 flex flex-col justify-between hover:border-stone-400 transition">
+                    <div>
+                        <div class="flex items-center justify-between text-xs font-semibold text-stone-500 mb-3">
+                            <span class="text-[#a61c1c] uppercase">${info.tag}</span>
+                            <span>${info.day}</span>
+                        </div>
+                        <div class="w-24 h-24 mx-auto my-2">
+                            ${club.svg}
+                        </div>
+                        <h4 class="font-heading text-2xl font-bold text-stone-900 uppercase mt-2">${info.name}</h4>
+                        <p class="text-sm text-stone-600 mt-2 leading-relaxed">
+                            ${info.caption}
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2 mt-5 pt-3 border-t border-stone-100">
+                        <button onclick="toggleJoin('${club.id}')" class="flex-1 py-2 px-3 text-xs font-bold transition cursor-pointer ${isJoined ? 'bg-emerald-700 text-white' : 'bg-[#a61c1c] hover:bg-[#881414] text-white'}">
+                            ${isJoined ? t.joinedBtn : t.joinBtn}
+                        </button>
+                        <button onclick="openModal('${club.id}')" class="py-2 px-3 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition cursor-pointer">
+                            ${t.infoBtn}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleJoin(id) {
+            const t = textPack[lang];
+            const club = clubsData.find(c => c.id === id);
+            const label = id === 'so' ? 'Student Organization (SO)' : club[lang].name;
+
+            if (joinedSet.has(id)) {
+                joinedSet.delete(id);
+                showToast(t.toastOut(label));
+            } else {
+                joinedSet.add(id);
+                showToast(t.toastIn(label));
+            }
+            renderAll();
+        }
+
+        function openModal(id) {
+            const club = clubsData.find(c => c.id === id);
+            if (!club) return;
+
+            const info = club[lang];
+            const t = textPack[lang];
+            const isJoined = joinedSet.has(id);
+
+            document.getElementById('modal-category').textContent = info.tag;
+            document.getElementById('modal-name').textContent = info.name;
+            document.getElementById('modal-drawing').innerHTML = club.svg;
+            document.getElementById('modal-caption').textContent = info.caption;
+            document.getElementById('modal-day').textContent = info.day;
+            document.getElementById('modal-room').textContent = info.room;
+
+            const actionBtn = document.getElementById('modal-action-btn');
+            actionBtn.textContent = isJoined ? t.joinedBtn : t.joinBtn;
+            actionBtn.className = isJoined
+                ? 'flex-1 bg-emerald-700 text-white font-semibold py-2.5 text-sm transition cursor-pointer'
+                : 'flex-1 bg-[#a61c1c] hover:bg-[#881414] text-white font-semibold py-2.5 text-sm transition cursor-pointer';
+            actionBtn.onclick = () => {
+                toggleJoin(id);
+                closeModal();
+            };
+
+            const modal = document.getElementById('club-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('club-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.remove('opacity-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, 2200);
+        }
+    </script>
+</body>
+</html>
